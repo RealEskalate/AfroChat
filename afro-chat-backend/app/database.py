@@ -6,6 +6,9 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from .utils.logger import sqlalchemy_logger as logger
 from . import initial_config as config
 
+from sqlalchemy.orm import DeclarativeBase
+
+
 engine = create_async_engine(
     url=config.POSTGRESS_URL.unicode_string(),
     future=True,
