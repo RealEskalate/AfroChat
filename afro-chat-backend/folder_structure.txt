@@ -1,0 +1,39 @@
+.
+├── README.md
+├── alembic.ini
+├── app
+│   ├── __init__.py
+│   ├── database.py
+│   ├── exceptions.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── user.py
+│   ├── routers
+│   │   ├── __init__.py
+│   │   └── api_v1
+│   │       ├── __init__.py
+│   │       └── users.py
+│   ├── schemas
+│   │   ├── __init__.py
+│   │   └── user.py
+│   └── utils
+│       ├── __init__.py
+│       ├── logger.py
+│       ├── singeleton.py
+│       └── utils.py
+├── config.py
+├── folder_structure.txt
+├── logs
+│   ├── fastapi.log
+│   └── sqlalchemy.log
+├── main.py
+├── migrations
+│   ├── README
+│   ├── script.py.mako
+│   └── versions
+├── requirements.txt
+└── tests
+    └── test_main.py
+
+11 directories, 26 files

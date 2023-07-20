@@ -17,6 +17,4 @@ def log_creator(logger_name: str) -> logging.Logger:
 
 
 fast_api_logger = log_creator('fastapi')
-sqlalchemy_logger = log_creator('sqlalchemyy')
-
-
+sqlalchemy_logger = log_creator('sqlalchemy')
