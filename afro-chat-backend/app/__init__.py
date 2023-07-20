@@ -9,7 +9,7 @@ TODO
     [x] setup the database
     [x] setup logger for the database separately
     [x] setup database migration for the alembic
-    [ ] setup development docker container and production docker container
+    [x] setup development docker container and production docker container
     [ ] have a general blue print that connects the telegram bot with the fast api
         - prepare the webhook method 
         - modify it to web hook at the end
