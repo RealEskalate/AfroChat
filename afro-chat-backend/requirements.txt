@@ -1,0 +1,7 @@
+gevent==21.12.0
+fastapi[all]
+alembic
+sqlalchemy[asyncio]
+asyncpg
+pytest
+asyncio
