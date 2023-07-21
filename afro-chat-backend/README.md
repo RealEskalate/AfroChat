@@ -13,8 +13,8 @@ TODO
     [ ] have a general blue print that connects the telegram bot with the fast api
         - prepare the webhook method 
         - modify it to push update method at the end
-    [ ] better documentation about the flow and setup
     [ ] using best practices for the google 
+    [ ] better documentation about the flow and setup Both on the markdown and code level
 '''
 
 
