@@ -3,18 +3,6 @@ from config import Config, initial_config
 from app.routers import api_v1_router
 from app.utils.logger import fast_api_logger, sqlalchemy_logger
 
-'''
-TODO
-    [x] setup logger for the fastapi, and for SQL operations separately
-    [x] setup the database
-    [x] setup logger for the database separately
-    [x] setup database migration for the alembic
-    [x] setup development docker container and production docker container
-    [ ] have a general blue print that connects the telegram bot with the fast api
-        - prepare the webhook method 
-        - modify it to web hook at the end
-'''
-
 
 async def logger_middleware(request: Request, call_next):
     request.state.logger = fast_api_logger
