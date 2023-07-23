@@ -12,7 +12,7 @@ from sqlalchemy.orm import DeclarativeBase
 engine = create_async_engine(
     url=config.POSTGRESS_URL.unicode_string(),
     future=True,
-    echo=True,
+    # echo=True,
     pool_size=20,
     max_overflow=20
 )

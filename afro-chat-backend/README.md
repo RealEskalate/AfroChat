@@ -15,7 +15,12 @@ TODO
         - modify it to push update method at the end
     [ ] using best practices for the google 
     [ ] better documentation about the flow and setup Both on the markdown and code level
+    [ ] test how much connection the backend would handle 
 '''
+
+alembic init -t async migrations
+alembic revision --autogenerate -m "alembic commit"
+alembic upgrade head
 
 
 docker build -t afro-chat-backend -f Dockerfile.dev .
