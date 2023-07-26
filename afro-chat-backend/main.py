@@ -3,6 +3,9 @@ import logging
 from config import initial_config as config
 from fastapi import Request
 from app import create_app, fast_api_logger
+from bot.bot import WEBHOOK_URL, WEBHOOK_PATH,dp, bot
+from aiogram import Bot, Dispatcher, types
+
 
 app = create_app(config)
 
@@ -12,9 +15,28 @@ async def shutdown_event():
     fast_api_logger.info("Shutting down...")
 
 
+
 @app.on_event('startup')
 async def startup_event():
+        
     fast_api_logger.info("Starting up...")
+    webhook_info = await bot.get_webhook_info()
+    fast_api_logger.info(f"webhoo_url : {webhook_info.url}")
+    if webhook_info.url != WEBHOOK_URL:
+        await bot.set_webhook(
+            url=WEBHOOK_URL
+        )
+
+    # response = await bot.set_webhook(url=WEBHOOK_URL)
+    # fast_api_logger.info(response)
+
+@app.post(WEBHOOK_PATH)
+async def bot_webhook(update: dict):
+    print(f"Webhook path is {WEBHOOK_URL}")
+    telegram_update = types.Update(**update)
+    Dispatcher.set_current(dp)
+    Bot.set_current(bot)
+    await dp.process_update(telegram_update)
 
 
 @app.get('/')
