@@ -5,3 +5,5 @@ sqlalchemy[asyncio]
 asyncpg
 pytest
 asyncio
+aiohttp[speedups]
+aiogram
