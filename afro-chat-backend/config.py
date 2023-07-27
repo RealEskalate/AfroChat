@@ -9,6 +9,7 @@ load_dotenv(dotenv_path='.env')
 class Config(BaseSettings):
     TELEGRAM_BOT_TOKEN: str = os.environ.get("TELEGRAM_BOT_TOKEN")
     POSTGRESS_URL: PostgresDsn = os.environ.get("DATABASE_URL")
+    BOT_NAME: str = os.environ.get('BOT_NAME')
     CONFIG_TYPE: str = ""
 
 
