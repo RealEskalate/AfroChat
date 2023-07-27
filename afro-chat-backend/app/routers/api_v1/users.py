@@ -30,7 +30,11 @@ async def read_items(
     print("the name is ", name, flush=True)
     user = User(name=name)
 
-    asyncio.create_task(perform_database_operation(user))
+
+    async for db_session in get_db():
+        await user.save(db_session)
+
+    # asyncio.create_task(perform_database_operation(user))
 
 
     # res = background_tasks.add_task(perform_database_operation, user,message = "add to db")
@@ -41,4 +45,4 @@ async def read_items(
     print("send the response")
     logger = request.state.logger
     logger.debug(f"save user {name}")
-    return [{"username": name}, {"username": "Morty"}]
+    return [{"username": name}, {"username": user.id}]
