@@ -23,6 +23,7 @@ async def startup_event():
     webhook_info = await bot.get_webhook_info()
     fast_api_logger.info(f"webhoo_url : {webhook_info.url}")
     if webhook_info.url != WEBHOOK_URL:
+        fast_api_logger.info("Updating the webhook url")
         await bot.set_webhook(
             url=WEBHOOK_URL
         )
