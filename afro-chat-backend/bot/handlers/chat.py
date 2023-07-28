@@ -18,4 +18,6 @@ async def handle_ask(message: Message):
     sent_message = await message.reply("Please wait while I find an answer ❄️...")
     response = "answer for your response"
     # response = await ask(message.text)
+    # import asyncio
+    # await asyncio.sleep(10)
     await sent_message.edit_text(response)

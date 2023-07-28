@@ -1,4 +1,5 @@
 .
+├── Dockerfile.dev
 ├── README.md
 ├── alembic.ini
 ├── app
@@ -17,14 +18,56 @@
 │   ├── schemas
 │   │   ├── __init__.py
 │   │   └── user.py
+│   ├── telegram-bot
+│   │   └── __init__.py
 │   └── utils
 │       ├── __init__.py
 │       ├── logger.py
 │       ├── singeleton.py
 │       └── utils.py
+├── benchmarks
+│   └── Database Test.jmx
+├── bot
+│   ├── bot.py
+│   ├── data
+│   │   ├── aboutus.py
+│   │   ├── personal.py
+│   │   ├── setting.py
+│   │   └── start.py
+│   ├── features
+│   │   ├── __init__.py
+│   │   ├── ask
+│   │   │   └── __init__.py
+│   │   ├── chat
+│   │   │   └── __init__.py
+│   │   ├── menu
+│   │   │   ├── __init__.py
+│   │   │   ├── handlers.py
+│   │   │   ├── keyboards.py
+│   │   │   └── texts.py
+│   │   ├── persona
+│   │   │   └── __init__.py
+│   │   └── task
+│   │       └── __init__.py
+│   ├── filters
+│   │   └── triggers.py
+│   ├── handlers
+│   │   ├── aboutus.py
+│   │   ├── chat.py
+│   │   ├── personal.py
+│   │   ├── setting.py
+│   │   └── start.py
+│   ├── keyboards
+│   │   ├── mainmenu.py
+│   │   ├── personal.py
+│   │   ├── setting.py
+│   │   └── start.py
+│   └── utils
+│       └── __init__.py
 ├── config.py
 ├── folder_structure.txt
 ├── logs
+│   ├── __init__.py
 │   ├── fastapi.log
 │   └── sqlalchemy.log
 ├── main.py
@@ -32,8 +75,11 @@
 │   ├── README
 │   ├── script.py.mako
 │   └── versions
+│       ├── 3861f6f903c2_added_age_and_last_name.py
+│       ├── c72e660b696b_remove_test.py
+│       └── f34f32debea6_remove_test.py
 ├── requirements.txt
 └── tests
     └── test_main.py
 
-11 directories, 26 files
+25 directories, 58 files
