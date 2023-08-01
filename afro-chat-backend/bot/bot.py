@@ -1,29 +1,23 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram import Bot, Dispatcher
 from config import initial_config
-from .handlers import start, aboutus, personal, setting, chat
-from .filters.triggers import Trigger
 
 from bot.features import register_features
-
-from bot.bot_state import GlobalState
 
 
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
-SERVICE_URL = f"https://22bc-185-177-124-194.ngrok-free.app"
+SERVICE_URL = "https://1d8b-185-177-124-201.ngrok-free.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
 
 if not API_TOKEN:
-    raise Exception("Telegram API token not found. Set the TELEGRAM_API_TOKEN environment variable.")
+    raise Exception(
+        "Telegram API token not found.\
+        Set the TELEGRAM_API_TOKEN environment variable."
+    )
 
 bot = Bot(token=API_TOKEN, parse_mode="html")
 dp = Dispatcher(bot)
-# dp.middleware.setup(LoggingMiddleware())
-
-
-
 register_features(dp)
 
 
@@ -36,7 +30,7 @@ register_features(dp)
 #     This handler will be called when user sends `/start` or `/help` command
 #     """
 
-#     
+#
 #     user = types.User.get_current()
 #     bot = Bot.get_current()
 #     bot.ban_chat_member

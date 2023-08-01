@@ -33,7 +33,6 @@ async def handle_globale_state(message: types.Message):
 
             case 'easy formatter':
                 pass
-
         # response = await message.answer(text="Please give me some momment while I find an answer to your request ❄️")
         # import asyncio
         # await asyncio.sleep(3)
