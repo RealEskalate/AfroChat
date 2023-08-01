@@ -16,9 +16,11 @@ users_router = APIRouter(
 async def perform_database_operation(user:User, message:str = "") -> None:
     print("continue working the task", flush=True)
 
-    await asyncio.sleep(3)
     async for session in get_db():
         await user.save(session)
+        await asyncio.sleep(3)
+        user2 = User(name='abella')
+        await user2.save(session)
         print(user.id, user.name, flush=True)
 
 @users_router.get("/")
@@ -31,10 +33,10 @@ async def read_items(
     user = User(name=name)
 
 
-    async for db_session in get_db():
-        await user.save(db_session)
+    # async for db_session in get_db():
+    #     await user.save(db_session)
 
-    # asyncio.create_task(perform_database_operation(user))
+    asyncio.create_task(perform_database_operation(user))
 
 
     # res = background_tasks.add_task(perform_database_operation, user,message = "add to db")

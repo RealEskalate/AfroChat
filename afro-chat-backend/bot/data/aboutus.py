@@ -1,1 +1,0 @@
-about_text = '''🍏 About AfroChat bot OpenAI chatGPT is a natural language processing (NLP) model developed by OpenAI, a research lab based in San Francisco.It is a deep learning-based model that can generate human-like conversations in response to user input.The model is trained on a large corpus of texts and is capable of generating responses in real time.'''

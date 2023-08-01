@@ -1,1 +1,0 @@
-setting_text = '⚙️ Settings'
