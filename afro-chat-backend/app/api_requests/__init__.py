@@ -2,7 +2,7 @@ import aiohttp
 from typing import List, Tuple
 import ujson
 import asyncio
-
+from config import initial_config
 from app.database_operations import add_question
 
 
@@ -14,7 +14,7 @@ async def make_request(messages: List[dict[str, str]]) -> Tuple[str, int]:
     )
 
     headers = {
-        "Authorization": "Bearer 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",
+        "Authorization": f"Bearer {initial_config.OPENAI_API_KEY}",
         "Content-Type": "application/json",
     }
     try:

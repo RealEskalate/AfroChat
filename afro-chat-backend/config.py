@@ -10,6 +10,7 @@ class Config(BaseSettings):
     TELEGRAM_BOT_TOKEN: str = os.environ.get("TELEGRAM_BOT_TOKEN")
     POSTGRESS_URL: PostgresDsn = os.environ.get("DATABASE_URL")
     BOT_NAME: str = os.environ.get('BOT_NAME')
+    OPENAI_API_KEY: str = os.environ.get('OPENAI_API_KEY')
     CONFIG_TYPE: str = ""
 
 
