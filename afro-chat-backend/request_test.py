@@ -20,7 +20,7 @@ async def make_request(question: str) -> Tuple[str, int]:
     )
 
     headers = {
-        "Authorization": "Bearer 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",
+        "Authorization": "Bearer sk-abel",
         "Content-Type": "application/json",
     }
     try:
