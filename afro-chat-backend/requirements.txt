@@ -7,3 +7,4 @@ pytest
 asyncio
 aiohttp[speedups]
 aiogram
+faker
