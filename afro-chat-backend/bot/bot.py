@@ -7,7 +7,7 @@ from bot.features import register_features
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
-SERVICE_URL = "https://78f8-185-177-124-191.ngrok-free.app"
+SERVICE_URL = "https://e5ab-196-189-150-186.ngrok-free.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
 
 if not API_TOKEN:

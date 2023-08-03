@@ -38,5 +38,4 @@ async def add_question(question: str, answer: str, user_id: int, token_usage):
                 )
                 await ask.save(session)
     except Exception as e:
-        print("*" * 200)
-        print(e)
+        raise e
