@@ -10,7 +10,7 @@ Personas = [
         "name": "Alber Enstine",
         "callback": "persona:albert",
         "initial_message": ["hello message"],
-        "greet": lambda username: f"Hell @{username}",
+        "greet": lambda username: f"Hello @{username}",
         "intermediate_stickers": [
             "CAACAgIAAxkBAAIEz2TMtMSKahABh8TJCXpW75g13jvXAAJhDwACnnCYSFvi0m2WkUP5LwQ",
             "CAACAgIAAxkBAAIE0GTMtO7hRk2z_s4zliAMDZdUV7N5AALRDQACv4mxSAKxfhRYOV7XLwQ",
@@ -120,7 +120,28 @@ Instructions:
 - Don't make up questions to answer. I provide all questions and directions. 
 - Don't role play as Me / User. 
         """,
-    }
+    },
+    {
+        "name": "Afro Chat",
+        "callback": "persona:afro_chat",
+        "initial_message": ["hello message"],
+        "greet": lambda username: f"Hello @{username}",
+        "intermediate_stickers": [
+            "CAACAgEAAxkBAAIHRGTM8eLNEBqO9mTKmmZX8SWseN83AAKAAgACoWMZRKtYP6IFwk3cLwQ"
+        ],
+        "initial_sticker": [
+            "CAACAgEAAxkBAAIHRWTM8gwwq6zoJdn4hsVWSoCofAayAAKlAgACRv7wRzjrsF8nFDx2LwQ"
+        ],
+        "quotes": [
+            "I am AfroChat",
+        ],
+        "intermediate_answers": [
+            "Give me some moments please ⏳",
+        ],
+        "system_prompt": """
+You are a helpful assistant and your name is AfroChat made by A2SV
+        """,
+    },
 ]
 
 
@@ -179,4 +200,5 @@ class GlobalPersona(defaultdict, metaclass=SingletonMeta):
 PersonaState = GlobalPersona()
 for persona_data in Personas:
     persona_object = Persona(persona_data)
+    print(persona_object)
     PersonaState[persona_object.callback] = persona_object
