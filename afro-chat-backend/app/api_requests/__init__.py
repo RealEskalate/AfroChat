@@ -10,7 +10,7 @@ async def make_request(messages: List[dict[str, str]]) -> Tuple[str, int]:
     url = "https://api.openai.com/v1/chat/completions"
 
     payload = ujson.dumps(
-        {"model": "gpt-3.5-turbo-16k", "messages": messages, "temperature": 0.3}
+        {"model": "gpt-3.5-turbo", "messages": messages, "temperature": 0.1}
     )
 
     headers = {
@@ -44,7 +44,33 @@ async def make_ask_request(question: str, user_id: int):
     ]
     answer, total_tokens = await make_request(messages)
 
-    asyncio.create_task(add_question(
-        question=question, answer=answer, user_id=user_id, token_usage=total_tokens
-    ))
+    asyncio.create_task(
+        add_question(
+            question=question, answer=answer, user_id=user_id, token_usage=total_tokens
+        )
+    )
     return answer
+
+
+async def make_chat_request(
+    history: List[dict[str, str]],
+    system_prompt: str,
+    question: str,
+    session_id: int | None,
+) -> List[dict[str, str]]:
+    messages: List[dict[str, str]] = []
+    messages.append(
+        {
+            "role": "system",
+            "content": system_prompt,
+        }
+    )
+    messages.extend(history)
+
+    messages.append({"role": "user", "content": question})
+
+    response, total_tokens = await make_request(messages)
+    print(total_tokens)
+    messages.append({"role": "assistant", "content": response})
+
+    return messages[1:]
