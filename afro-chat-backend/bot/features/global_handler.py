@@ -47,7 +47,7 @@ async def handle_globale_state(message: types.Message):
         print("USER", State[chat_id])
         match last_chat:
             case "ask":
-                response = await message.answer(
+                response = await message.reply(
                     text=f"Getting your answer please wait...❄️"
                 )
                 answer = await make_ask_request(question=message.text, user_id=user_id)
@@ -68,7 +68,7 @@ async def handle_globale_state(message: types.Message):
                 sticker_response = await message.answer_sticker(
                     persona.get_intermediate_sticker()
                 )
-                text_response = await message.answer(persona.get_intermediate_answers())
+                text_response = await message.reply(persona.get_intermediate_answers())
                 history = await make_chat_request(
                     history=history,
                     system_prompt=persona.system_prompt,
