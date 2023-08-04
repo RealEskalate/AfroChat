@@ -6,7 +6,7 @@ persona_cb = CallbackData('persona', 'name')
 
 persona_kb = InlineKeyboardMarkup(row_width=2)
 
-persona_kb.insert(InlineKeyboardButton(text="Abel", callback_data=persona_cb.new('abel')))
+persona_kb.insert(InlineKeyboardButton(text="Albert Einstein", callback_data=persona_cb.new('albert')))
 persona_kb.insert(InlineKeyboardButton(text="Samiya", callback_data=persona_cb.new('sami')))
 persona_kb.insert(InlineKeyboardButton(text="Birook", callback_data=persona_cb.new('birook')))
 persona_kb.insert(InlineKeyboardButton(text="Eyu", callback_data=persona_cb.new('eyu')))

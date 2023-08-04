@@ -3,7 +3,7 @@ import time
 from bot.bot_state import State
 from .texts import persona_text
 from .keyboards import persona_kb
-from bot.features.ask.keyboards import ask_keyboard
+from bot.person_list import Persona, PersonaState
 
 
 async def handle_persona_command(message: types.Message):
@@ -69,9 +69,29 @@ async def send_formatted_text(message: types.Message):
 
 async def handle_persona_click_callback(call: types.CallbackQuery):
     try:
-        name = call.data.split(":")[1]
+        persona_name = call.data
         chat_id = str(call.message.chat.id)
-        State[chat_id].update({"last_chat": name, "last_request": int(time.time())})
+
+        try:
+            persona: Persona = PersonaState[persona_name]
+            # handle your memory code and everything here!!!
+            State[chat_id].update(
+                {
+                    "last_chat": persona_name,
+                    "last_request": int(time.time()),
+                    "session_id": None,
+                    "history": [],
+                }
+            )
+            await call.message.answer_sticker(persona.get_initial_sticker())
+            return await call.message.answer(
+                persona.get_greeting_text(call.message.chat.username)
+            )
+
+        except Exception:
+            await call.message.answer(
+                "You need a premium account to have an access to this persona"
+            )
 
         # formatted_text = """*
         # <b>This is bold</b> text using HTML.
@@ -86,9 +106,6 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
         # Hello, <a href='tg://user?id=USER_ID'>@username</a>! is a mention using HTML."""
 
         # await call.message.reply(formatted_text, parse_mode=types.ParseMode.HTML)
-        return await call.message.reply(
-            f"hello {call.message.chat.first_name} I am {name.upper()} How can I help you"
-        )
     except Exception:
         return await call.message.answer(
             text="something\

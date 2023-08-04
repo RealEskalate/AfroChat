@@ -1,14 +1,17 @@
-from app.api_requests import make_ask_request
+import random
+from app.api_requests import make_ask_request, make_chat_request
 from app.database import get_db
 
 # from app.models import Ask
 from app.routers.api_v1 import users
 from bot.bot_state import State
+from bot.person_list import PersonaState, Persona
 from bot.features.menu.keyboards import start_kb
 from bot.features.menu.texts import start_text
 from aiogram import asyncio, types
 from aiogram import Dispatcher
 from app.database_operations import add_question, get_or_create_user
+from typing import List
 
 
 # async def perform_database_operation(user: User, message: str = "") -> None:
@@ -24,34 +27,29 @@ from app.database_operations import add_question, get_or_create_user
 
 async def handle_globale_state(message: types.Message):
     try:
-        chat_id = str(message.chat.id)
-        last_chat = State[chat_id].get("last_chat", None)
+        chat_id: str = str(message.chat.id)
+        last_chat: str = State[chat_id].get("last_chat", None)
         if not last_chat:
             return await message.answer(text=start_text, reply_markup=start_kb)
 
-        user_id = await get_or_create_user(
-            telegram_id=chat_id,
-            firstname=message.chat.first_name,
-            username=message.chat.username,
-        )
-        print("user id is", user_id)
-        # user = User(name=chat_id)
-        # asyncio.create_task(perform_database_operation(user))
+        # store the USER_ID localy on dictionary to avoid further requests
+        user_id: int = State[chat_id].get("user_id", None)
+        if not user_id:
+            user_id = await get_or_create_user(
+                telegram_id=chat_id,
+                firstname=message.chat.first_name,
+                username=message.chat.username,
+            )
+            State[chat_id].update({"user_id": user_id})
 
-        print(State[chat_id])
+        print("*" * 100)
+        print("users last_chat", last_chat)
+        print("USER", State[chat_id])
         match last_chat:
             case "ask":
-                # connect it with the database that have a schema of the question and the answer
-                # this would be used letter on
-                # i need a function that would send reuqest to chat gpt then get the answer
-                # await make_ask_request()
-                # await add_question(
-                #     question=message.text,
-                #     answer=message.text,
-                #     user_id=user_id,
-                #     token_usage=1,
-                # )
-                response = await message.answer(text=f"getting your answer please wait❄️")
+                response = await message.answer(
+                    text=f"Getting your answer please wait...❄️"
+                )
                 answer = await make_ask_request(question=message.text, user_id=user_id)
                 await response.edit_text(answer)
 
@@ -59,16 +57,33 @@ async def handle_globale_state(message: types.Message):
                 response = await message.answer(text="chat feature❄️")
                 pass
 
-            case "persona":
-                pass
+            case last_chat if last_chat.startswith("persona"):
+                persona: Persona = PersonaState[last_chat]
+                history: List[dict] = State[chat_id].get("history")
+                session_id: int = State[chat_id].get("session_id")
 
-            case "easy formatter":
-                pass
-        # response = await message.answer(text="Please give me some momment while I find an answer to your request ❄️")
-        # import asyncio
-        # await asyncio.sleep(3)
-        # return await response.edit_text(text="chat gpt response")
-    except Exception:
+                print("---"*100)
+                history = history[-6:]
+
+                sticker_response = await message.answer_sticker(
+                    persona.get_intermediate_sticker()
+                )
+                text_response = await message.answer(persona.get_intermediate_answers())
+                history = await make_chat_request(
+                    history=history,
+                    system_prompt=persona.system_prompt,
+                    question=message.text,
+                    session_id=session_id,
+                )
+                answer = history[-1]["content"]
+
+                await sticker_response.delete()
+                await text_response.edit_text(answer)
+                State[chat_id].update({"history": history})
+                # send a request by passing the history, session_id, system_prompt
+                # # handle your memory code and everything here!!!
+                # history = State[chat_id].get("")
+    except Exception as e:
         return await message.answer(
             text="something\
                 happen please came back letter"
