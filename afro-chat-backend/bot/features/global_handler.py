@@ -14,17 +14,6 @@ from app.database_operations import add_question, get_or_create_user
 from typing import List
 
 
-# async def perform_database_operation(user: User, message: str = "") -> None:
-#     print("continue working the task", flush=True)
-
-#     async for session in get_db():
-#         await user.save(session)
-#         await asyncio.sleep(3)
-#         user2 = User(name="abella")
-#         await user2.save(session)
-#         print(user.id, user.telegram_id, flush=True)
-
-
 async def handle_globale_state(message: types.Message):
     try:
         chat_id: str = str(message.chat.id)
@@ -42,13 +31,10 @@ async def handle_globale_state(message: types.Message):
             )
             State[chat_id].update({"user_id": user_id})
 
-        print("*" * 100)
-        print("users last_chat", last_chat)
-        print("USER", State[chat_id])
         match last_chat:
             case "ask":
                 response = await message.reply(
-                    text=f"Getting your answer please wait...❄️"
+                    text="Getting your answer please wait...❄️"
                 )
                 answer = await make_ask_request(question=message.text, user_id=user_id)
                 await response.edit_text(answer)
@@ -62,7 +48,7 @@ async def handle_globale_state(message: types.Message):
                 history: List[dict] = State[chat_id].get("history")
                 session_id: int = State[chat_id].get("session_id")
 
-                print("---"*100)
+                print("---" * 100)
                 history = history[-6:]
 
                 sticker_response = await message.answer_sticker(

@@ -25,7 +25,7 @@ async def startup_event():
 @app.post(WEBHOOK_PATH)
 async def bot_webhook(update: dict):
     fast_api_logger.debug(update)
-    print(update, flush=True)
+    # print(update, flush=True)
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)

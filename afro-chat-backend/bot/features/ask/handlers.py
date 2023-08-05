@@ -30,7 +30,6 @@ async def handle_ask_callback(call: types.CallbackQuery):
         chat_id = str(call.message.chat.id)
         State[chat_id].update({"last_chat": "ask",
                                "last_request": int(time.time())})
-        print(State[chat_id])
         return await call.message.answer(text=chat_text,
                                          reply_markup=ask_keyboard)
     except Exception:

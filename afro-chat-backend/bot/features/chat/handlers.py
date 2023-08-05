@@ -71,12 +71,6 @@ async def handle_chat_callback(call: types.CallbackQuery):
             await message.answer(
                 "You need a premium account to have an access to this persona"
             )
-    
-        # State[chat_id].update(
-        #     {"last_chat": "afro_chat", "last_request": int(time.time())}
-        # )
-        # print(State[chat_id])
-        # return await call.message.answer(text=chat_text, reply_markup=chat_keyboard)
     except Exception:
         return await call.message.answer(
             text="something happen please came back letter"

@@ -11,7 +11,7 @@ async def logger_middleware(request: Request, call_next):
 
 
 def create_app(config: Config) -> FastAPI:
-    print(config.CONFIG_TYPE)
+    fast_api_logger.info("App started as", config.CONFIG_TYPE)
     app = FastAPI()
     app.include_router(api_v1_router)
     app.middleware('http')(logger_middleware)

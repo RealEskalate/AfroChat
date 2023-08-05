@@ -200,5 +200,4 @@ class GlobalPersona(defaultdict, metaclass=SingletonMeta):
 PersonaState = GlobalPersona()
 for persona_data in Personas:
     persona_object = Persona(persona_data)
-    print(persona_object)
     PersonaState[persona_object.callback] = persona_object
