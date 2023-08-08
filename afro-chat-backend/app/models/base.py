@@ -8,9 +8,9 @@ from asyncpg import UniqueViolationError
 class Base(DeclarativeBase):
     __name__: str
 
-    @declared_attr
-    def __tablename__(self) -> str:
-        return self.__name__.lower()
+    # @declared_attr
+    # def __tablename__(self) -> str:
+    #     return self.__name__.lower()
 
     async def save(self, db_session: AsyncSession):
         """
