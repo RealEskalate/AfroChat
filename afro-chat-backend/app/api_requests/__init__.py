@@ -123,7 +123,6 @@ async def make_chat_request(
             )
 
             session_id = await add_new_conversation(conversation)
-            print("session id", session_id)
         else:
 
             temp_messages: List[Message] = [
@@ -143,7 +142,10 @@ async def make_chat_request(
                 ),
             ]
 
-            temp_messages = await add_new_message(temp_messages, conversation_id=session_id, total_tokens=total_tokens)
+            asyncio.create_task(
+                add_new_message(temp_messages, conversation_id=session_id,
+                                total_tokens=total_tokens)
+            )
 
             # add the messages here
 
@@ -151,5 +153,4 @@ async def make_chat_request(
 
         return messages[-1], session_id
     except Exception as e:
-        print(e)
         raise e

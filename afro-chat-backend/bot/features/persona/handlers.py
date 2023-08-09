@@ -71,7 +71,6 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
     try:
         persona_name = call.data
         chat_id = str(call.message.chat.id)
-
         try:
             persona: Persona = PersonaState[persona_name]
             # handle your memory code and everything here!!!

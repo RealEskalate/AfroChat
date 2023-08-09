@@ -49,12 +49,7 @@ async def handle_globale_state(message: types.Message):
                 history: List[dict] = State[chat_id].get("history")
                 session_id: int = State[chat_id].get("session_id")
 
-                print("---" * 100)
-                print(session_id)
                 history = history[-6:]
-
-                print("history")
-                print(history)
 
                 sticker_response = await message.answer_sticker(
                     persona.get_intermediate_sticker()
@@ -70,7 +65,6 @@ async def handle_globale_state(message: types.Message):
                     persona=last_chat,
                 )
 
-                print("returned session_id", session_id)
                 answer = response["content"]
                 history.append(response)
 

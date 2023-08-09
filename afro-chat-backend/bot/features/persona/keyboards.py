@@ -8,11 +8,11 @@ persona_kb = InlineKeyboardMarkup(row_width=2)
 
 persona_kb.insert(InlineKeyboardButton(text="Albert Einstein",
                   callback_data=persona_cb.new('albert')))
-persona_kb.insert(InlineKeyboardButton(text="Bill Gates",
-                  callback_data=persona_cb.new('sami')))
+persona_kb.insert(InlineKeyboardButton(text="Jordan Peterson",
+                  callback_data=persona_cb.new('jordan')))
 persona_kb.insert(InlineKeyboardButton(text="Kevin Hart",
-                  callback_data=persona_cb.new('birook')))
+                  callback_data=persona_cb.new('kevin')))
 persona_kb.insert(InlineKeyboardButton(
-    text="Nelson Mandela", callback_data=persona_cb.new('Mandela')))
+    text="Nelson Mandela", callback_data=persona_cb.new('mandela')))
 persona_kb.row(InlineKeyboardButton(
     text='🔙 Go Back to Main Menu', callback_data='start'))
