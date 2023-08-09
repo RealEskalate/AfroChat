@@ -45,7 +45,6 @@ GROUP_NAME = "@afrochat_discussion"
 @app.post(WEBHOOK_PATH)
 async def bot_webhook(update: dict):
     fast_api_logger.debug(update)
-    print(update.keys())
     result: dict | None = recursive_search(update, "from")
     if result:
         user_id: int = result.get("id", None)

@@ -8,7 +8,7 @@ from aiogram import types
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
-SERVICE_URL = "https://4088-196-189-150-186.ngrok-free.app"
+SERVICE_URL = "https://de8b-196-191-61-117.ngrok-free.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
 
 if not API_TOKEN:
@@ -21,12 +21,12 @@ bot = Bot(token=API_TOKEN, parse_mode="html")
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=["tools"])
-async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    return await message.reply("Comming Soon")
+# @dp.message_handler(commands=["tools"])
+# async def send_welcome(message: types.Message):
+#     """
+#     This handler will be called when user sends `/start` or `/help` command
+#     """
+#     return await message.reply("Comming Soon")
 
 
 register_features(dp)
