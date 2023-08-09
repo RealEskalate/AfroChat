@@ -18,11 +18,12 @@ TODO
     [ ] test how much connection the backend would handle 
 '''
 
-alembic init -t async migrations
+
+alembic init -t async migrations [you will have to do it only for the first time]
 alembic revision --autogenerate -m "alembic commit"
-alembic upgrade head
+alembic upgrade heads
 
 
-docker build -t afro-chat-backend -f Dockerfile.dev .
-docker run -v "$(pwd):/app" -p 8000:8000 --name=afro-chat-backend afro-chat-backend
-docker start afro-chat-backend
+docker build -t afro-chat-backend -f Dockerfile.dev . [ for the first time only]
+docker run -v "$(pwd):/app" -p 8000:8000 --name=afro-chat-backend afro-chat-backend [for the first time only]
+docker start afro-chat-backend -i [to start the server next time]

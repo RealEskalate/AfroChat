@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from typing import List
 from typing import Optional
 from sqlalchemy import ForeignKey
-from sqlalchemy import String
+from sqlalchemy import String, INTEGER, func
 from sqlalchemy.orm import DeclarativeBase, Session
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -22,6 +22,7 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy import select
 from faker import Faker
 import random
+from datetime import datetime
 
 random.seed(42)
 
@@ -35,28 +36,31 @@ engine = create_async_engine(
     echo=True,
 )
 
-AsyncSessionFactory = sessionmaker(engine, autoflush=False, expire_on_commit=False, class_=AsyncSession)
+AsyncSessionFactory = sessionmaker(
+    engine, autoflush=False, expire_on_commit=False, class_=AsyncSession
+)
 
 
 class Base(DeclarativeBase):
     __name__: str
 
-    @declared_attr
-    def __tablename__(self) -> str:
-        return self.__name__.lower()
+    # @declared_attr
+    # def __tablename__(self) -> str:
+    #     return self.__name__.lower()
 
     async def save(self, db_session: AsyncSession):
         """
         :param db_session:
         :return:
-        
+
         """
         try:
             db_session.add(self)
             return await db_session.commit()
         except SQLAlchemyError as ex:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)) from ex
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)
+            ) from ex
 
     async def delete(self, db_session: AsyncSession):
         """
@@ -70,7 +74,8 @@ class Base(DeclarativeBase):
             return True
         except SQLAlchemyError as ex:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)) from ex
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)
+            ) from ex
 
     async def update(self, db: AsyncSession, **kwargs):
         """
@@ -85,7 +90,8 @@ class Base(DeclarativeBase):
             return await db.commit()
         except SQLAlchemyError as ex:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)) from ex
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(ex)
+            ) from ex
 
     async def save_or_update(self, db_session: AsyncSession):
         try:
@@ -136,7 +142,7 @@ async def init_db():
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
     telegram_id: Mapped[str] = mapped_column(String(50), nullable=False)
     firstname: Mapped[str] = mapped_column(String(50), nullable=False)
@@ -147,13 +153,43 @@ class User(Base):
 
 
 class Ask(Base):
-    __tablename__ = 'ask'
+    __tablename__ = "ask"
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     question: Mapped[str] = mapped_column(String(1000), nullable=False)
     answer: Mapped[str] = mapped_column(String(1000), nullable=False)
 
-    user: Mapped[User] = relationship(backref='user')
+    user: Mapped[User] = relationship(backref="user")
+
+
+class Conversation(Base):
+    __tablename__ = "conversation"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    persona: Mapped[str] = mapped_column(String(50), nullable=False)
+    system_propmp: Mapped[str] = mapped_column(String(5000), nullable=False)
+    total_token: Mapped[int] = mapped_column(
+        INTEGER, nullable=False, server_default="0"
+    )
+    # created_date: Mapped[datetime] = mapped_column(server_default=func.now())
+
+    messages: Mapped[List["Message"]] = relationship("Message", back_populates="conversation")
+
+
+class Message(Base):
+    __tablename__ = "message"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversation.id"))
+    role: Mapped[str] = mapped_column(String(50), nullable=False)
+    content: Mapped[str] = mapped_column(String(5000), nullable=False)
+    token_usage: Mapped[int] = mapped_column(INTEGER, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+    conversation: Mapped["Conversation"] = relationship(
+        "Conversation", back_populates="messages"
+    )
 
 
 # Dependency
@@ -164,9 +200,7 @@ async def get_db() -> AsyncGenerator:
 
 
 async def get_session() -> AsyncSession:
-    async_session = sessionmaker(
-        engine, class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
 
@@ -175,19 +209,21 @@ fake = Faker()
 
 Faker.seed(42)
 
-async def generate_random_users_and_asks(num_users=10, max_asks_per_user=5):
 
+async def generate_random_users_and_asks(num_users=10, max_asks_per_user=5):
     users = []
     for _ in range(num_users):
         user = User(
             telegram_id=fake.user_name(),
             firstname=fake.first_name(),
-            username=fake.user_name() if fake.boolean(chance_of_getting_true=50) else None
+            username=fake.user_name()
+            if fake.boolean(chance_of_getting_true=50)
+            else None,
         )
         # session.add(user)
         users.append(user)
 
-            # users.append(ask)
+        # users.append(ask)
 
     async for session in get_db():
         session.add_all(users)
@@ -195,13 +231,14 @@ async def generate_random_users_and_asks(num_users=10, max_asks_per_user=5):
         await session.commit()
     return users
 
+
 async def generate_asks():
     asks = []
     for _ in range(10):
         ask = Ask(
             user_id=1,
             question=fake.text(max_nb_chars=1000),
-            answer=fake.text(max_nb_chars=1000)
+            answer=fake.text(max_nb_chars=1000),
         )
         asks.append(ask)
 
@@ -217,11 +254,14 @@ async def adder(users):
         session.add_all(users)
         await session.commit()
 
+
 def fetch_data(session: AsyncSession):
     stm = select(User)
     res = session.scalars(stm)
     for x in res:
-        print('---'*10, x)
+        print("---" * 10, x)
+
+
 # spongebob = User(
 #     name="spongebob",
 #     fullname="Spongebob Squarepants",
@@ -241,9 +281,8 @@ def fetch_data(session: AsyncSession):
 # async def main():
 #     await init_db()
 #     await generate_random_users_and_asks()
-    # async for session in get_db():
-    #     session.add_all([spongebob, sandy, patrick])
-    #     await session.commit()
+# async for session in get_db():
+#     session.add_all([spongebob, sandy, patrick])
+#     await session.commit()
 
 # asyncio.run(main())
-
