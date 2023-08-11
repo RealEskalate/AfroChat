@@ -8,8 +8,9 @@ from aiogram import types
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
-SERVICE_URL = "https://de8b-196-191-61-117.ngrok-free.app"
+SERVICE_URL = "https://17b8-196-191-60-104.ngrok-free.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
+
 
 if not API_TOKEN:
     raise Exception(

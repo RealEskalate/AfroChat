@@ -45,25 +45,25 @@ GROUP_NAME = "@afrochat_discussion"
 @app.post(WEBHOOK_PATH)
 async def bot_webhook(update: dict):
     fast_api_logger.debug(update)
-    result: dict | None = recursive_search(update, "from")
-    if result:
-        user_id: int = result.get("id", None)
-        if user_id:
-            state: types.ChatMember = await bot.get_chat_member(GROUP_NAME, user_id)
-            if state.status == "left":
-                total_users: int = await bot.get_chat_members_count(GROUP_NAME)
-                if total_users >= 100:
-                    return await bot.send_message(chat_id=user_id, text="we are at full capacity right now please cameback after a while")
+    # result: dict | None = recursive_search(update, "from")
+    # if result:
+    #     user_id: int = result.get("id", None)
+    #     if user_id:
+    #         state: types.ChatMember = await bot.get_chat_member(GROUP_NAME, user_id)
+    #         if state.status == "left":
+    #             total_users: int = await bot.get_chat_members_count(GROUP_NAME)
+    #             if total_users >= 100:
+    #                 return await bot.send_message(chat_id=user_id, text="we are at full capacity right now please cameback after a while")
 
-                message_text = f"""Hello! In order to have access to the bot, you need to join our AfroChat Discussion group first.
-                Please click on this <a href="https://t.me/afrochat_discussion">link</a> or search and join for @afrochat_discussion to join the group and start using the bot.
-                Thank you😊!"""
-                return await bot.send_message(chat_id=user_id, text=message_text)
+    #             message_text = f"""Hello! In order to have access to the bot, you need to join our AfroChat Discussion group first.
+    #             Please click on this <a href="https://t.me/afrochat_discussion">link</a> or search and join for @afrochat_discussion to join the group and start using the bot.
+    #             Thank you😊!"""
+    #             return await bot.send_message(chat_id=user_id, text=message_text)
 
-            Dispatcher.set_current(dp)
-            Bot.set_current(bot)
-            telegram_update = types.Update(**update)
-            await dp.process_update(telegram_update)
+    Dispatcher.set_current(dp)
+    Bot.set_current(bot)
+    telegram_update = types.Update(**update)
+    await dp.process_update(telegram_update)
 
 
 @app.get("/")
