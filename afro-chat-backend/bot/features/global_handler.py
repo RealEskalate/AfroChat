@@ -17,8 +17,11 @@ from typing import List
 
 async def handle_globale_state(message: types.Message):
     try:
+        if message.chat.id <= 0:
+            return
         chat_id: str = str(message.chat.id)
         last_chat: str = State[chat_id].get("last_chat", None)
+
         if not last_chat:
             return await message.answer(text=start_text, reply_markup=start_kb)
 
