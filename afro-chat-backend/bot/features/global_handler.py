@@ -37,6 +37,7 @@ async def handle_globale_state(message: types.Message):
                 response = await message.reply(
                     text="Getting your answer please wait...❄️"
                 )
+                return
                 answer = await make_ask_request(question=message.text, user_id=user_id)
                 await response.edit_text(answer)
 
