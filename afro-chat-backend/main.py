@@ -11,6 +11,7 @@ def recursive_search(dictionary, target_key) -> dict | None:
             return dictionary[target_key]
         for key, value in dictionary.items():
             result = recursive_search(value, target_key)
+
             if result is not None:
                 return result
     elif isinstance(dictionary, list):
@@ -34,6 +35,7 @@ async def startup_event():
     fast_api_logger.info("Starting up...")
     webhook_info = await bot.get_webhook_info()
     fast_api_logger.info(f"webhoo_url : {webhook_info.url}")
+
     if webhook_info.url != WEBHOOK_URL:
         fast_api_logger.info("Updating the webhook url")
         await bot.set_webhook(url=WEBHOOK_URL)

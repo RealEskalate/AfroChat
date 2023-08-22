@@ -8,7 +8,7 @@ from aiogram import types
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
-SERVICE_URL = "https://17b8-196-191-60-104.ngrok-free.app"
+SERVICE_URL = "https://afrochat-bot-telegram-ij7jnmwh2q-zf.a.run.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
 
 
