@@ -88,7 +88,7 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
             )
 
         except Exception:
-            await call.message.answer(
+            return await call.message.answer(
                 "You need a premium account to have an access to this persona"
             )
 
@@ -107,6 +107,5 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
         # await call.message.reply(formatted_text, parse_mode=types.ParseMode.HTML)
     except Exception:
         return await call.message.answer(
-            text="something\
-                happen please came back letter"
+            text="something happen please came back letter"
         )

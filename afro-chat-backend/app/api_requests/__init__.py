@@ -124,7 +124,6 @@ async def make_chat_request(
 
             session_id = await add_new_conversation(conversation)
         else:
-
             temp_messages: List[Message] = [
                 Message(
                     conversation_id=session_id,
@@ -143,8 +142,9 @@ async def make_chat_request(
             ]
 
             asyncio.create_task(
-                add_new_message(temp_messages, conversation_id=session_id,
-                                total_tokens=total_tokens)
+                add_new_message(
+                    temp_messages, conversation_id=session_id, total_tokens=total_tokens
+                )
             )
 
             # add the messages here
