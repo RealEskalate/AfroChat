@@ -2,7 +2,6 @@ from aiogram import Bot, Dispatcher
 from config import initial_config
 
 from bot.features import register_features
-from aiogram import types
 
 
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN

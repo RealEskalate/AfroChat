@@ -1,3 +1,4 @@
+from bot.bot_commands import BOT_COMMANDS
 from config import initial_config as config
 from fastapi import Request
 from app import create_app, fast_api_logger
@@ -36,6 +37,7 @@ async def startup_event():
     webhook_info = await bot.get_webhook_info()
     fast_api_logger.info(f"webhoo_url : {webhook_info.url}")
 
+    await bot.set_my_commands(commands=BOT_COMMANDS)
     if webhook_info.url != WEBHOOK_URL:
         fast_api_logger.info("Updating the webhook url")
         await bot.set_webhook(url=WEBHOOK_URL)
@@ -65,6 +67,8 @@ async def bot_webhook(update: dict):
 
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
+
+    
     telegram_update = types.Update(**update)
     await dp.process_update(telegram_update)
 
