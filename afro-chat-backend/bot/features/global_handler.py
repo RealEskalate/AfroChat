@@ -47,7 +47,9 @@ async def handle_globale_state(message: types.Message):
                 response = await message.answer(text="chat feature❄️")
                 pass
 
-            case last_chat if last_chat.startswith("persona"):
+            case last_chat if last_chat.startswith("persona") or last_chat.startswith(
+                "tool"
+            ):
                 persona: Persona = PersonaState[last_chat]
                 history: List[dict] = State[chat_id].get("history")
                 session_id: int = State[chat_id].get("session_id")
@@ -77,7 +79,7 @@ async def handle_globale_state(message: types.Message):
                 # send a request by passing the history, session_id, system_prompt
                 # # handle your memory code and everything here!!!
                 # history = State[chat_id].get("")
-    except Exception as e:
+    except Exception:
         return await message.answer(
             text="something\
                 happen please came back letter"
