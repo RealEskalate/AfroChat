@@ -49,7 +49,7 @@ GROUP_NAME = "@afrochat_discussion"
 @app.post(WEBHOOK_PATH)
 async def bot_webhook(update: dict):
     fast_api_logger.debug(update)
-    print(update)
+    # print(update)
     # result: dict | None = recursive_search(update, "from")
     # if result:
     #     user_id: int = result.get("id", None)
@@ -68,7 +68,6 @@ async def bot_webhook(update: dict):
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
 
-    
     telegram_update = types.Update(**update)
     await dp.process_update(telegram_update)
 
