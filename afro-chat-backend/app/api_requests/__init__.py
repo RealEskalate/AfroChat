@@ -13,7 +13,7 @@ from app.database_operations import (
     add_new_conversation,
     get_conversation,
 )
-from database_learn import get_db
+from app.database import get_db
 
 
 async def make_request(messages: List[dict[str, str]]) -> Tuple[str, int, int, int]:
