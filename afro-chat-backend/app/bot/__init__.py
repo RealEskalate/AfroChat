@@ -8,7 +8,6 @@ API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
 
 WEBHOOK_PATH = f"/bot/{API_TOKEN}"
 SERVICE_URL = "https://afrochat-bot-telegram-ij7jnmwh2q-zf.a.run.app"
-SERVICE_URL = "https://e57a-196-189-150-186.ngrok-free.app"
 WEBHOOK_URL = SERVICE_URL + WEBHOOK_PATH
 
 
