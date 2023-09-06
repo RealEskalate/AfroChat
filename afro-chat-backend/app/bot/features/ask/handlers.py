@@ -2,7 +2,7 @@ from aiogram import types
 from .texts import chat_text
 from .keyboards import ask_keyboard
 import time
-from bot.bot_state import State
+from app.bot.bot_state import State
 
 
 async def ask_command_handler(message: types.Message):
@@ -14,8 +14,8 @@ async def ask_command_handler(message: types.Message):
 
     except Exception:
         return await message.answer(
-                text="something happen please came back letter"
-                )
+            text="something happen please came back letter"
+        )
 
 
 async def handle_ask_callback(call: types.CallbackQuery):

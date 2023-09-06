@@ -1,8 +1,8 @@
-from bot.bot_commands import BOT_COMMANDS
+from app.bot.bot_commands import BOT_COMMANDS
 from config import initial_config as config
 from fastapi import Request
 from app import create_app, fast_api_logger
-from bot.bot import WEBHOOK_URL, WEBHOOK_PATH, dp, bot
+from app.bot import WEBHOOK_URL, WEBHOOK_PATH, dp, bot
 from aiogram import Bot, Dispatcher, types
 
 
@@ -10,7 +10,7 @@ def recursive_search(dictionary, target_key) -> dict | None:
     if isinstance(dictionary, dict):
         if target_key in dictionary:
             return dictionary[target_key]
-        for key, value in dictionary.items():
+        for _, value in dictionary.items():
             result = recursive_search(value, target_key)
 
             if result is not None:
@@ -60,8 +60,9 @@ async def bot_webhook(update: dict):
     #             if total_users >= 100:
     #                 return await bot.send_message(chat_id=user_id, text="we are at full capacity right now please cameback after a while")
 
-    #             message_text = f"""Hello! In order to have access to the bot, you need to join our AfroChat Discussion group first.
-    #             Please click on this <a href="https://t.me/afrochat_discussion">link</a> or search and join for @afrochat_discussion to join the group and start using the bot.
+    #             message_text = """Hello! In order to have access to the bot, you need to join our AfroChat Discussion group first.
+    #             Please click on this <a href="https://t.me/afrochat_discussion">link</a> or search and join for @afrochat_discussion\
+    #                     to join the group and start using the bot.
     #             Thank you😊!"""
     #             return await bot.send_message(chat_id=user_id, text=message_text)
 

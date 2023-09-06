@@ -8,3 +8,4 @@ asyncio
 aiohttp[speedups]
 aiogram
 faker
+aiogram_unittest

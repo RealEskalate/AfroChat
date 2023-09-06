@@ -5,7 +5,7 @@ from sqlalchemy import select
 import ujson
 import asyncio
 from app.models import Conversation, Message
-from bot.features import persona
+from app.bot.features import persona
 from config import initial_config
 from app.database_operations import (
     add_new_message,

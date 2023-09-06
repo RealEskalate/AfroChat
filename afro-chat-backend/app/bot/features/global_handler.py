@@ -5,10 +5,10 @@ from app.models import Conversation
 
 # from app.models import Ask
 from app.routers.api_v1 import users
-from bot.bot_state import State
-from bot.person_list import PersonaState, Persona
-from bot.features.menu.keyboards import start_kb
-from bot.features.menu.texts import start_text
+from app.bot.bot_state import State
+from app.bot.person_list import PersonaState, Persona
+from app.bot.features.menu.keyboards import start_kb
+from app.bot.features.menu.texts import start_text
 from aiogram import asyncio, types
 from aiogram import Dispatcher
 from app.database_operations import add_question, get_conversation, get_or_create_user
@@ -79,7 +79,8 @@ async def handle_globale_state(message: types.Message):
                 # send a request by passing the history, session_id, system_prompt
                 # # handle your memory code and everything here!!!
                 # history = State[chat_id].get("")
-    except Exception:
+    except Exception as e:
+        print(e)
         return await message.answer(
             text="something\
                 happen please came back letter"

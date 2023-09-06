@@ -1,9 +1,9 @@
 from aiogram import types
 import time
-from bot.bot_state import State
+from app.bot.bot_state import State
 from .texts import persona_text
 from .keyboards import persona_kb
-from bot.person_list import Persona, PersonaState
+from app.bot.person_list import Persona, PersonaState
 
 
 async def handle_persona_command(message: types.Message):
