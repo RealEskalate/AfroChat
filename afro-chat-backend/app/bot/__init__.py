@@ -1,7 +1,7 @@
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
 from config import initial_config
 
-from bot.features import register_features
+from app.bot.features import register_features
 
 
 API_TOKEN = initial_config.TELEGRAM_BOT_TOKEN
@@ -28,6 +28,15 @@ dp = Dispatcher(bot)
 #     """
 #     return await message.reply("Comming Soon")
 
+
+async def copy_message_handler(message: types.Message):
+    try:
+        return await bot.copy_message(message.chat.id, "665082331", "5938", caption="")
+    except Exception:
+        return
+
+
+dp.register_message_handler(copy_message_handler, commands=["help"])
 
 register_features(dp)
 

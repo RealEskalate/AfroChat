@@ -1,6 +1,6 @@
 from aiogram import types
-from bot.bot_state import State
-from bot.person_list import Persona, PersonaState
+from app.bot.bot_state import State
+from app.bot.person_list import Persona, PersonaState
 
 from .keyboards import tools_kb
 from .texts import tools_text
