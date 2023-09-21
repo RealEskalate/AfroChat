@@ -5,7 +5,7 @@ from sqlalchemy import select
 import ujson
 import asyncio
 from app.models import Conversation, Message
-from bot.features import persona
+from app.bot.features import persona
 from config import initial_config
 from app.database_operations import (
     add_new_message,
@@ -13,7 +13,7 @@ from app.database_operations import (
     add_new_conversation,
     get_conversation,
 )
-from database_learn import get_db
+from app.database import get_db
 
 
 async def make_request(messages: List[dict[str, str]]) -> Tuple[str, int, int, int]:
@@ -123,9 +123,7 @@ async def make_chat_request(
             )
 
             session_id = await add_new_conversation(conversation)
-            print("session id", session_id)
         else:
-
             temp_messages: List[Message] = [
                 Message(
                     conversation_id=session_id,
@@ -143,7 +141,11 @@ async def make_chat_request(
                 ),
             ]
 
-            temp_messages = await add_new_message(temp_messages, conversation_id=session_id, total_tokens=total_tokens)
+            asyncio.create_task(
+                add_new_message(
+                    temp_messages, conversation_id=session_id, total_tokens=total_tokens
+                )
+            )
 
             # add the messages here
 
@@ -151,5 +153,4 @@ async def make_chat_request(
 
         return messages[-1], session_id
     except Exception as e:
-        print(e)
         raise e

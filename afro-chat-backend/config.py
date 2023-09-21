@@ -3,14 +3,14 @@ from pydantic import PostgresDsn
 import os
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path='.env')
+load_dotenv(dotenv_path=".env")
 
 
 class Config(BaseSettings):
-    TELEGRAM_BOT_TOKEN: str = os.environ.get("TELEGRAM_BOT_TOKEN")
-    POSTGRESS_URL: PostgresDsn = os.environ.get("DATABASE_URL")
-    BOT_NAME: str = os.environ.get('BOT_NAME')
-    OPENAI_API_KEY: str = os.environ.get('OPENAI_API_KEY')
+    TELEGRAM_BOT_TOKEN: str = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+    POSTGRESS_URL: PostgresDsn = os.environ.get("DATABASE_URL", "")
+    BOT_NAME: str = os.environ.get("BOT_NAME", "")
+    OPENAI_API_KEY: str = os.environ.get("OPENAI_API_KEY", "")
     CONFIG_TYPE: str = ""
 
 
@@ -29,10 +29,10 @@ class TestConfig(Config):
     pass
 
 
-def get_settings(config_type: str = os.environ.get('CONFIG', 'dev')) -> Config:
-    if config_type == 'dev':
+def get_settings(config_type: str = os.environ.get("CONFIG", "dev")) -> Config:
+    if config_type == "dev":
         return DevConfing()
-    if config_type == 'test':
+    if config_type == "test":
         return TestConfig()
     return ProductionConfig()
 

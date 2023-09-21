@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from database_learn import User
 from sqlalchemy import INTEGER, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String

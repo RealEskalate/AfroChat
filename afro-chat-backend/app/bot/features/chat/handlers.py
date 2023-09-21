@@ -2,8 +2,8 @@ from aiogram import types
 from .texts import chat_text
 from .keyboards import chat_keyboard
 import time
-from bot.bot_state import State
-from bot.person_list import Persona, PersonaState
+from app.bot.bot_state import State
+from app.bot.person_list import Persona, PersonaState
 
 
 async def chat_command_handler(message: types.Message):

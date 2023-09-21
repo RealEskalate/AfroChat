@@ -1,9 +1,9 @@
 from aiogram import types
 import time
-from bot.bot_state import State
+from app.bot.bot_state import State
 from .texts import persona_text
 from .keyboards import persona_kb
-from bot.person_list import Persona, PersonaState
+from app.bot.person_list import Persona, PersonaState
 
 
 async def handle_persona_command(message: types.Message):
@@ -71,7 +71,6 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
     try:
         persona_name = call.data
         chat_id = str(call.message.chat.id)
-
         try:
             persona: Persona = PersonaState[persona_name]
             # handle your memory code and everything here!!!
@@ -89,7 +88,7 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
             )
 
         except Exception:
-            await call.message.answer(
+            return await call.message.answer(
                 "You need a premium account to have an access to this persona"
             )
 
@@ -108,6 +107,5 @@ async def handle_persona_click_callback(call: types.CallbackQuery):
         # await call.message.reply(formatted_text, parse_mode=types.ParseMode.HTML)
     except Exception:
         return await call.message.answer(
-            text="something\
-                happen please came back letter"
+            text="something happen please came back letter"
         )
